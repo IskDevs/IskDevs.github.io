@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Leaderboards</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="CSS/Styles.css">
+    <script src="../Project Web/JavaScript/HeaderFooter.js"></script>
+    <script src="../Project Web/JavaScript/leaderboard.js"></script>
+    <special-header></special-header>
+</head>
+
+<body>
+    <div class="container-wrap">
+        <section id="leaderboard">
+            <nav class="ladder-nav">
+                <div class="ladder-title">
+                    <h1>Standings</h1>
+                </div>
+                <div class="ladder-search">
+                    <input type="text" id="search-leaderboard" class="live-search-box" placeholder="Search Player..."
+                        oninput="searchLeaderboard()" />
+                </div>
+            </nav>
+            <table id="rankings" class="leaderboard-results" width="100%">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Name</th>
+                        <th>PTS</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboard-body">
+                    <!-- Leaderboard content will be dynamically added here -->
+                </tbody>
+            </table>
+        </section>
+        <special-footer></special-footer>
+    </div>
+</body>
+
+</html>
