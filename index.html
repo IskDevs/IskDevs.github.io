@@ -1,26 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Page Title</title>
-
-    <!-- Link your CSS file here -->
-    <link rel="stylesheet" type="text/css" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Holtyx Portfolio</title>
+  <!-- Google Fonts (Orbitron for headings, Roboto for body text) -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Font Awesome for social icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+  <!-- CSS Styles -->
+  <link rel="stylesheet" href="styles.css" />
 </head>
-
 <body>
-    <!-- Your HTML content goes here -->
+  <!-- Navigation Bar (Logo, Menu Links, Theme Toggle) -->
+  <nav>
+    <div class="container nav-container">
+      <h1 class="logo">holtyx</h1>
+      <div class="nav-menu">
+        <ul class="nav-links">
+          <li><a href="#about">About Me</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#social">Social</a></li>
+        </ul>
+        <!-- Dark/Light mode toggle button -->
+        <button id="theme-toggle">Light Mode</button>
+      </div>
+    </div>
+  </nav>
 
-    <h1>Hello, World!</h1>
-    <p>This is a simple HTML page.</p>
+  <!-- About Me Section -->
+  <section id="about" class="section">
+    <div class="container">
+      <h2>About Me</h2>
+      <p class="intro">
+        <strong>holtyx</strong> – co-owner of Pedobear Server (GMod), a beginner programmer, and developer of the game <em>Gorndorn</em>.
+        I am 21 years old and currently pursuing an IT Bachelor's degree at MDX University.
+      </p>
+    </div>
+  </section>
 
-    <!-- Include any other HTML elements or content as needed -->
-    <h1 class="grays">GornDorn</h1>
-    <h1 class="purples">Color fonts</h1>
-    <h1 class="mint">Color fonts</h1>
+  <!-- Projects Section -->
+  <section id="projects" class="section">
+    <div class="container">
+      <h2>Projects</h2>
+      <div class="project-item">
+        <h3>Gorndorn – Game Development</h3>
+        <p>A personal indie game project in development. I'm working on the design, programming, and graphics for this futuristic adventure game.</p>
+      </div>
+      <div class="project-item">
+        <h3>Pedobear GMod Server – Co-owner</h3>
+        <p>Co-owner and administrator of a Garry's Mod community server (Pedobear). Responsible for server management, community engagement, and custom mod scripting.</p>
+      </div>
+    </div>
+  </section>
 
+  <!-- Contact Section -->
+  <section id="contact" class="section">
+    <div class="container">
+      <h2>Contact</h2>
+      <p>Feel free to reach out by filling the form below, or contact me directly on Discord.</p>
+      <form>
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" id="name" placeholder="Your name" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" placeholder="you@example.com" required />
+        </div>
+        <div class="form-group">
+          <label for="message">Message:</label>
+          <textarea id="message" rows="4" placeholder="Your message" required></textarea>
+        </div>
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Social Links Section -->
+  <section id="social" class="section">
+    <div class="container">
+      <h2>Social Links</h2>
+      <p>Connect with me on these platforms:</p>
+      <ul class="social-links">
+        <li><a href="https://github.com/IskDevs" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
+        <li><a href="#" onclick="return false;"><i class="fab fa-discord"></i> Discord: isk_gmz</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Include GSAP library and custom script at the end of body for performance -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+  <script src="script.js"></script>
+    <script>
+        // Theme Toggle (Dark Mode <-> Light Mode)
+const themeToggleBtn = document.getElementById('theme-toggle');
+themeToggleBtn.addEventListener('click', () => {
+  document.body.classList.toggle('light-mode');
+  // Update the toggle button text depending on the mode
+  themeToggleBtn.textContent = document.body.classList.contains('light-mode') ? 'Dark Mode' : 'Light Mode';
+});
+
+// GSAP Animations for section entrances
+gsap.from('.section', {
+  opacity: 0,
+  y: 50,
+  duration: 0.8,
+  stagger: 0.3,
+  ease: 'power2.out'
+});
+
+    </script>
 </body>
-
 </html>
