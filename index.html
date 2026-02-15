@@ -1,117 +1,752 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Holtyx Portfolio</title>
-  <!-- Google Fonts (Orbitron for headings, Roboto for body text) -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-  <!-- Font Awesome for social icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
-  <!-- CSS Styles -->
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>How To Play</title>
+
+  <!-- CARTOON FONTS (Google Fonts) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Knewave&family=Rubik+Wet+Paint&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg1:#fff2c6;
+      --bg2:#d7fff7;
+      --paper:#ffffff;
+      --ink:#111827;
+      --muted:#4b5563;
+
+      --hot:#ff2f6d;
+      --cyan:#00d6c6;
+      --violet:#7c5cff;
+      --yellow:#ffd166;
+
+      --shadow: 0 18px 50px rgba(0,0,0,.18);
+      --border: rgba(17,24,39,.14);
+      --radius: 22px;
+
+      --title: "Knewave", "Rubik Wet Paint", system-ui, sans-serif;
+      --body: "Comic Neue", "Comic Sans MS", "Comic Sans", system-ui, sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--body);
+      color:var(--ink);
+      background:
+        radial-gradient(900px 600px at 12% 10%, rgba(255,47,109,.22), transparent 55%),
+        radial-gradient(900px 600px at 88% 16%, rgba(0,214,198,.18), transparent 55%),
+        radial-gradient(800px 520px at 75% 92%, rgba(124,92,255,.16), transparent 55%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+      overflow-x:hidden;
+    }
+
+    /* confetti dots */
+    body::before{
+      content:"";
+      position:fixed; inset:0;
+      pointer-events:none;
+      opacity:.15;
+      background-image:
+        radial-gradient(circle at 12% 20%, rgba(255,47,109,.9) 2px, transparent 3px),
+        radial-gradient(circle at 82% 16%, rgba(0,214,198,.9) 2px, transparent 3px),
+        radial-gradient(circle at 55% 75%, rgba(124,92,255,.85) 2px, transparent 3px),
+        radial-gradient(circle at 28% 68%, rgba(255,209,102,.95) 2px, transparent 3px);
+      background-size: 260px 220px;
+      mix-blend-mode:multiply;
+    }
+
+    .wrap{max-width:980px;margin:0 auto;padding:18px}
+
+    /* top bar */
+    .top{
+      position:sticky; top:0; z-index:10;
+      background: rgba(255,255,255,.78);
+      backdrop-filter: blur(10px);
+      border-bottom:2px solid rgba(17,24,39,.08);
+    }
+    .bar{
+      max-width:980px; margin:0 auto;
+      padding:12px 18px;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+    }
+    .brand{display:flex; align-items:center; gap:10px}
+    .blob{
+      width:40px; height:40px; border-radius:14px;
+      border:2px solid rgba(17,24,39,.12);
+      background: conic-gradient(from 120deg, var(--hot), var(--yellow), var(--cyan), var(--violet), var(--hot));
+      box-shadow: 0 12px 24px rgba(255,47,109,.18);
+    }
+    .brand h1{
+      margin:0;
+      font-family:var(--title);
+      letter-spacing:1px;
+      font-size:18px;
+      text-transform:uppercase;
+    }
+    .brand .sub{
+      margin-top:2px;
+      font-family:var(--mono);
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:flex-end}
+
+    .btn{
+      font-family:var(--title);
+      text-transform:uppercase;
+      letter-spacing:1px;
+      font-size:12px;
+      border:2px solid rgba(17,24,39,.16);
+      background: rgba(255,255,255,.90);
+      padding:10px 12px;
+      border-radius:18px;
+      cursor:pointer;
+      user-select:none;
+      box-shadow: 0 12px 26px rgba(10,10,30,.14);
+      transition: transform .08s ease;
+    }
+    .btn:hover{transform: translateY(-1px)}
+    .btn:active{transform: translateY(0px) scale(.99)}
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(255,47,109,.95), rgba(255,209,102,.92));
+    }
+
+    /* slides */
+    .deck{padding:18px 0 96px}
+    .slide{
+      margin: 14px 0;
+      border:3px solid var(--border);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,255,255,.92));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .slide::before{
+      content:"";
+      position:absolute; inset:0 0 auto 0;
+      height:10px;
+      background: linear-gradient(90deg, var(--hot), var(--yellow), var(--cyan), var(--violet));
+    }
+    .hd{
+      padding: 18px 14px 10px;
+      border-bottom:2px dashed rgba(17,24,39,.14);
+      display:flex; justify-content:space-between; gap:12px; align-items:flex-start;
+    }
+    .title{
+      margin:0;
+      font-family:var(--title);
+      font-size:34px;
+      line-height:1.02;
+      letter-spacing: 1px;
+      text-transform:uppercase;
+    }
+    .title small{
+      display:block;
+      margin-top:8px;
+      font-family:var(--body);
+      text-transform:none;
+      letter-spacing:0;
+      font-size:14px;
+      color:var(--muted);
+    }
+
+    .stamp{
+      font-family:var(--mono);
+      font-size:11px;
+      font-weight:900;
+      text-transform:uppercase;
+      padding:8px 10px;
+      border-radius:999px;
+      border:2px solid rgba(17,24,39,.16);
+      background: rgba(255,255,255,.90);
+      transform: rotate(8deg);
+      white-space:nowrap;
+    }
+    .stamp.red{background: rgba(255,47,109,.15); border-color: rgba(255,47,109,.25)}
+    .stamp.y{background: rgba(255,209,102,.22); border-color: rgba(255,209,102,.35)}
+    .stamp.c{background: rgba(0,214,198,.16); border-color: rgba(0,214,198,.28)}
+    .stamp.v{background: rgba(124,92,255,.14); border-color: rgba(124,92,255,.26)}
+
+    .bd{padding:14px}
+
+    .two{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap:14px;
+      align-items:stretch;
+    }
+    @media (max-width:900px){ .two{grid-template-columns:1fr} }
+
+    .bullets{
+      margin:0;
+      padding-left: 18px;
+      font-size: 18px;
+      line-height: 1.45;
+    }
+    .bullets li{margin: 8px 0}
+    .bullets strong{color: var(--hot)}
+
+    .callout{
+      margin-top:12px;
+      border:2px dashed rgba(17,24,39,.18);
+      background: rgba(255,209,102,.18);
+      border-radius: 18px;
+      padding:12px;
+      font-size: 15px;
+    }
+
+    .imgbox{
+      border-radius: 18px;
+      border:2px solid rgba(17,24,39,.14);
+      background: rgba(255,255,255,.92);
+      overflow:hidden;
+      /* IMPORTANT: no fixed aspect ratio -> no cropping */
+      padding: 10px;
+      display:block;
+    }
+    .imgbox img{
+      width:100%;
+      height:auto;          /* let the image decide its height */
+      max-height: 360px;    /* keep slides tidy */
+      object-fit: contain;  /* keep whole image visible */
+      display:block;
+      margin: 0 auto;
+    }
+    .caption{
+      margin-top:8px;
+      font-family: var(--mono);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* player card */
+    .card{
+      border:3px solid rgba(17,24,39,.14);
+      border-radius:22px;
+      background: linear-gradient(135deg, rgba(255,47,109,.14), rgba(0,214,198,.12));
+      padding:12px;
+    }
+    .cardTop{display:flex; gap:12px; align-items:center}
+    .pfp{
+      width:72px; height:72px;
+      border-radius:18px;
+      overflow:hidden;
+      border:3px solid rgba(17,24,39,.12);
+      box-shadow: 0 12px 24px rgba(10,10,30,.16);
+      background:#fff;
+      flex:0 0 auto;
+    }
+    .pfp img{width:100%; height:100%; object-fit:cover; display:block}
+    .cardName{font-family:var(--title); font-size:22px; margin:0; letter-spacing:1px; text-transform:uppercase}
+    .cardType{font-family:var(--mono); font-size:12px; color:var(--muted)}
+    .stats{
+      margin-top:10px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:8px;
+    }
+    .stat{
+      border:2px dashed rgba(17,24,39,.16);
+      border-radius:16px;
+      padding:8px 10px;
+      background: rgba(255,255,255,.75);
+      font-family:var(--mono);
+      font-size:12px;
+    }
+    .stat b{color:var(--hot)}
+
+    /* popup contract */
+    .backdrop{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.55);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      z-index:50;
+    }
+    .modal{
+      width:min(580px, 100%);
+      border-radius: 22px;
+      border:3px solid rgba(255,255,255,.35);
+      background: rgba(255,255,255,.98);
+      box-shadow: 0 30px 90px rgba(0,0,0,.45);
+      overflow:hidden;
+    }
+    .modal .top{
+      padding:14px 14px 0;
+      display:flex; justify-content:space-between; gap:10px; align-items:flex-start;
+    }
+    .modal h2{
+      margin:0;
+      font-family:var(--title);
+      font-size:20px;
+      letter-spacing:1px;
+      text-transform:uppercase;
+    }
+    .modal .sub{
+      margin:4px 0 0;
+      font-family:var(--mono);
+      font-size:12px;
+      color:var(--muted);
+    }
+    .modal .body{padding:12px 14px 14px}
+
+    .check{
+      display:flex; gap:10px; align-items:flex-start;
+      border:2px solid rgba(17,24,39,.16);
+      background: rgba(255,47,109,.12);
+      border-radius:18px;
+      padding:10px 12px;
+      margin:10px 0;
+      font-size:15px;
+    }
+    .check span{
+      display:block;
+      color:var(--muted);
+      font-family:var(--mono);
+      font-size:12px;
+      margin-top:4px;
+    }
+
+    .out{
+      margin-top:10px;
+      border:2px dashed rgba(17,24,39,.18);
+      background: rgba(255,255,255,.78);
+      border-radius:18px;
+      padding:12px;
+      font-family: var(--mono);
+      font-size:12.5px;
+      white-space:pre-wrap;
+    }
+
+    .toast{
+      position:fixed;
+      left:50%; bottom:18px;
+      transform: translateX(-50%);
+      border-radius:999px;
+      border:2px solid rgba(17,24,39,.18);
+      background: rgba(255,255,255,.92);
+      padding:10px 12px;
+      font-family:var(--mono);
+      font-size:12px;
+      display:none;
+      box-shadow: 0 16px 40px rgba(10,10,30,.16);
+      z-index:60;
+    }
+
+    .shake{animation: shake .25s ease-in-out 2}
+    @keyframes shake{0%{transform:translateX(0)}25%{transform:translateX(-5px)}50%{transform:translateX(6px)}75%{transform:translateX(-4px)}100%{transform:translateX(0)}}
+
+    kbd{font-family:var(--mono);font-size:11px;padding:2px 6px;border-radius:8px;border:1px solid rgba(17,24,39,.18);background:rgba(255,255,255,.88)}
+
+    .footerDisclaimer{
+      margin-top:16px;
+      font-family:var(--mono);
+      font-size:11px;
+      color: rgba(17,24,39,.65);
+      text-align:center;
+    }
+  </style>
 </head>
+
 <body>
-  <!-- Navigation Bar (Logo, Menu Links, Theme Toggle) -->
-  <nav>
-    <div class="container nav-container">
-      <h1 class="logo">IskDevs</h1>
-      <div class="nav-menu">
-        <ul class="nav-links">
-          <li><a href="#about">About Me</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#contact">Contact</a></li>
-          <li><a href="#social">Social</a></li>
-        </ul>
-        <!-- Dark/Light mode toggle button -->
-        <button id="theme-toggle">Light Mode</button>
+  <div class="top">
+    <div class="bar">
+      <div class="brand">
+        <div class="blob" aria-hidden="true"></div>
+        <div>
+          <h1>BGE Tiltblade’s Ragebait Deck</h1>
+          <div class="sub">full educational guide • designed to annoy you • and potentially explain how dumb u are</div>
+        </div>
+      </div>
+      <div class="row">
+        <button class="btn" id="btnOpenContract">📝 CONTRACT</button>
+        <button class="btn primary" id="btnBait">🚫 REPORT THIS PAGE</button>
       </div>
     </div>
-  </nav>
+  </div>
 
-  <!-- About Me Section -->
-  <section id="about" class="section">
-    <div class="container">
-      <h2>About Me</h2>
-      <p class="intro">
-        <strong>holtyx</strong> – co-owner of Pedobear Server (GMod), a beginner programmer, and developer of the game <em>Gorndorn</em>.
-      </p>
-      <p><strong>AGE:</strong> 21</p>
-      <p><strong> About me:</strong> Bachelor degree in IT , Soon graduate at MDX University.</p>
-    </div>
-  </section>
+  <div class="wrap">
+    <div class="deck">
 
-  <!-- Projects Section -->
-  <section id="projects" class="section">
-    <div class="container">
-      <h2>Projects</h2>
-      <div class="project-item">
-        <h3>Gorndorn – Game Development</h3>
-        <p>A personal indie game project in development. I'm working on the design, programming, and graphics for this futuristic adventure game.</p>
+      <!-- SLIDE 0 -->
+      <section class="slide" id="slide-0">
+        <div class="hd">
+          <h2 class="title">WELCOME.
+            <small>if you’re reading this, you’re already tilted.</small>
+          </h2>
+          <div class="stamp c">UNOFFICIAL</div>
+        </div>
+        <div class="bd two">
+          <div>
+            <div class="card" aria-label="Player card">
+              <div class="cardTop">
+                <div class="pfp"><img alt="BGE Tiltblade pfp" src="images/meme_chat_shh.jpg"></div>
+                <div>
+                  <p class="cardName">BGE TILTBLADE</p>
+                  <div class="cardType">TYPE: COINFLIP • ROLE: FILL (REGRET) • REGION: MENTAL BOOM</div>
+                </div>
+              </div>
+              <div class="stats">
+                <div class="stat">INT RATE: <b>LEGENDARY</b></div>
+                <div class="stat">CS @ 10: <b>???</b></div>
+                <div class="stat">TEAMFIGHT IQ: <b>LOW</b></div>
+                <div class="stat">TILT RESIST: <b>0</b></div>
+                <div class="stat">ULT: <b>RACISM</b> (AOE)</div>
+                <div class="stat">PASSIVE: <b>INSULTS</b></div>
+              </div>
+            </div>
+
+            <div class="callout" style="background: rgba(0,214,198,.14)">
+              <strong>BIO (REAL):</strong>
+              <div style="margin-top:6px; font-family:var(--mono); font-size:12px; line-height:1.5">
+                • Faker’s coach (source: my imagination)<br>
+                • Never lost a game in pro play (because I was never in one)<br>
+                • Invented macro • Discovered “rotate” • Solved League (allegedly)
+              </div>
+            </div>
+
+            <ul class="bullets" style="margin-top:14px">
+              <li>scroll. you <strong>must</strong> sign the contract.</li>
+              <li>if this annoys you: good.</li>
+              <li>this is <strong>ragebait</strong> — don’t be weird to real humans.</li>
+            </ul>
+
+            <div class="callout">
+              <strong>Disclaimer:</strong> this is all within the zone of comedy i hope you delete league of legends.
+              (everything else is emotional damage.)
+            </div>
+          </div>
+
+          <div>
+            <div class="imgbox">
+              <img alt="sup bot the game meme" src="images/meme_sup_bot_game.png">
+            </div>
+            <div class="caption">SUP + BOT + THE GAME (gone)</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 1 -->
+      <section class="slide" id="slide-1">
+        <div class="hd">
+          <h2 class="title">HOW TO NOT INT
+            <small>you won’t. but watch anyway.</small>
+          </h2>
+          <div class="stamp y">BEGINNER</div>
+        </div>
+        <div class="bd two">
+          <div>
+            <ul class="bullets">
+              <li>stop saying “i win this” — you don’t.</li>
+              <li>if you can’t see them: <strong>assume they’re here</strong>.</li>
+              <li>if you’re 0/3: stop “limit testing.” you’re just testing gravity.</li>
+              <li>if you die again: type “unlucky” and pretend it wasn’t a pattern.</li>
+            </ul>
+            <div class="callout">
+              PRO TIP: facechecking is a hobby. stop having hobbies.
+            </div>
+          </div>
+          <div>
+            <div class="imgbox">
+              <img alt="gank obvious meme" src="images/meme_gank_obvious.png">
+            </div>
+            <div class="caption">“bro i’m gonna gank, don’t make it obvious”</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2 -->
+      <section class="slide">
+        <div class="hd">
+          <h2 class="title">HOW TO NOT BE A MONKEY
+            <small>challenge level: impossible.</small>
+          </h2>
+          <div class="stamp red">ADVANCED</div>
+        </div>
+        <div class="bd two">
+          <div>
+            <ul class="bullets">
+              <li>before you go in: ask “do i have to?” <strong>no</strong>.</li>
+              <li>don’t chase. they are baiting you. you are the fish.</li>
+              <li>don’t type essays. nobody is reading your autobiography.</li>
+              <li>missing cannon isn’t “unlucky” — it’s a lifestyle.</li>
+            </ul>
+            <div class="callout">
+              strongest spell is not flash. it’s <strong>doing nothing</strong> for 2 seconds.
+            </div>
+          </div>
+          <div>
+            <div class="imgbox">
+              <img alt="you're not low elo you're my friend meme" src="images/meme_low_elo_friend.png">
+            </div>
+            <div class="caption">“you’re not low elo — you are my friend” (lie)</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3 -->
+      <section class="slide" id="slide-sys32">
+        <div class="hd">
+          <h2 class="title">HOW TO DELETE SYSTEM32
+            <small>classic bait tutorial (don’t actually do it).</small>
+          </h2>
+          <div class="stamp v">BAIT</div>
+        </div>
+        <div class="bd two">
+          <div>
+            <ul class="bullets">
+              <li><strong>STEP 1:</strong> Open Command Prompt (Admin)</li>
+              <li><strong>STEP 2:</strong> Type: <span style="font-family:var(--mono)">C:\Windows\System32</span></li>
+              <li><strong>STEP 3:</strong> If it says “Access Denied” you’re “force it as admin”</li>
+              <li><strong>STEP 4:</strong> Restart and enjoy +50 FPS</li>
+            </ul>
+            <div class="callout" style="background: rgba(124,92,255,.14)">
+              99% of players have shown positivity after this.
+              <div style="margin-top:8px;font-family:var(--mono);font-size:12px">
+                echo "bait detected" &amp;&amp; echo "touch grass"
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="imgbox">
+              <img alt="defeat rage meme" src="images/meme_defeat_rage.png">
+            </div>
+            <div class="caption">DEFEAT (feat. keyboard)</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4 -->
+      <section class="slide">
+        <div class="hd">
+          <h2 class="title">IF YOU PLAY “MEL” (KYS)
+            <small>you’re doing performance art.</small>
+          </h2>
+          <div class="stamp y">RAGEBAIT</div>
+        </div>
+        <div class="bd two">
+          <div>
+            <ul class="bullets">
+              <li>i will 100% ban it.</li>
+              <li>if i cannot ban it i will throw your game</li>
+              <li>i may steal a cannon by accident</li>
+              <li>inting sion mets will return for 1 game</li>
+              <li>bonus: i hope you talon E out of the window <strong>(if you are a mell player)</strong> like seriously who plays this shit </li>
+            </ul>
+            <div class="callout">
+              this slide is here to annoy you. if you’re mad: good.
+            </div>
+          </div>
+          <div>
+            <div class="imgbox">
+              <img alt="zombie patch meme" src="images/meme_zombie_patch.png">
+            </div>
+            <div class="caption">patch notes: “this will fix it”</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5 -->
+      <section class="slide">
+        <div class="hd">
+          <h2 class="title">IT’S NOT JG DIFF
+            <small>it’s you. yes, you.</small>
+          </h2>
+          <div class="stamp c">FACTS</div>
+        </div>
+        <div class="bd two">
+          <div>
+            <ul class="bullets">
+              <li>if you went 0/10: that’s not a matchup. that’s a biography.</li>
+              <li>stop pinging. you’re not summoning help — you’re summoning shame.</li>
+              <li>type “mb” once, then vanish into the fog of war.</li>
+            </ul>
+            <div class="callout">
+              enjoy your new personality: annoyed.
+            </div>
+          </div>
+          <div>
+            <div class="imgbox">
+              <img alt="jg diff spongebob meme" src="images/meme_jg_diff_spongebob.png">
+            </div>
+            <div class="caption">jg diff (copium edition)</div>
+          </div>
+        </div>
+      </section>
+
+      
+      <!-- SLIDE EXTRA -->
+      <section class="slide">
+        <div class="hd">
+          <h2 class="title">WOMAN PLAYER ?
+            <small>aka: the “I’m just here” role.</small>
+          </h2>
+          <div class="stamp red">RAGEBAIT</div>
+        </div>
+        <div class="bd two">
+          <div>
+            <ul class="bullets">
+              <li>follow guide 4 <strong>and install valorant.</strong>.</li>
+              <li>do not be in a game with me I would like to win.</li>
+              <li>Don't be a walking ward and pick something above yuumi difficulty.</li>
+              <li>DON'T PLAY LEAGUE</li>
+            </ul>
+            <div class="callout">
+              seriously it is statistically proven that woman in team = lower WR pls dont play league ...
+            </div>
+          </div>
+          <div>
+            <div class="imgbox">
+              <img alt="support meme" src="images/meme_sup_bot_game.png">
+            </div>
+            <div class="caption">support mains when the map exists</div>
+          </div>
+        </div>
+      </section>
+
+      <div class="footerDisclaimer">
+        tiny disclaimer: This page is made to piss the shit out of you and is made by Panda :D 
       </div>
-      <div class="project-item">
-        <h3>Pedobear GMod Server – Co-owner</h3>
-        <p>Co-owner and administrator of a Garry's Mod community server (Pedobear). Responsible for server management, community engagement,content manager.</p>
+
+    </div>
+  </div>
+
+  <!-- CONTRACT POPUP (auto on scroll) -->
+  <div class="backdrop" id="backdrop" role="dialog" aria-modal="true">
+    <div class="modal" id="modal">
+      <div class="top">
+        <div>
+          <h2>MANDATORY CONTRACT</h2>
+          <div class="sub">sign this or stay mad (you’ll stay mad anyway)</div>
+        </div>
+        <button class="btn" id="btnClose">✖ CLOSE</button>
+      </div>
+      <div class="body">
+        <div class="check"><input type="checkbox" id="c1"> <div><strong>I will not grief.</strong><span>“limit testing” is not a legal defense.</span></div></div>
+        <div class="check"><input type="checkbox" id="c2"> <div><strong>I am not a monkey.</strong><span>i will not all-in because i got bored.</span></div></div>
+        <div class="check"><input type="checkbox" id="c3"> <div><strong>I will not flame real humans.</strong><span>ragebait page ≠ permission slip.</span></div></div>
+        <div class="check"><input type="checkbox" id="c4"> <div><strong>I will stop typing novels.</strong><span>communication = 1 ping max.</span></div></div>
+
+        <div class="row">
+          <button class="btn" id="btnAuto">🤝 AUTO-CHECK</button>
+          <button class="btn primary" id="btnSign">✍️ SIGN</button>
+        </div>
+
+        <div class="out" id="signOut">Status: UNSIGNED.
+Outcome: suspicious.
+Punishment: autofilled Yuumi + 600 ping (imaginary).</div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- Contact Section -->
-  <section id="contact" class="section">
-    <div class="container">
-      <h2>Contact</h2>
-      <p>Feel free to reach out by filling the form below, or contact me directly on Discord.</p>
-      <form>
-        <div class="form-group">
-          <label for="name">Name:</label>
-          <input type="text" id="name" placeholder="Your name" required />
-        </div>
-        <div class="form-group">
-          <label for="email">Email:</label>
-          <input type="email" id="email" placeholder="you@example.com" required />
-        </div>
-        <div class="form-group">
-          <label for="message">Message:</label>
-          <textarea id="message" rows="4" placeholder="Your message" required></textarea>
-        </div>
-        <button type="submit">Send Message</button>
-      </form>
-    </div>
-  </section>
+  <div class="toast" id="toast">toast</div>
 
-  <!-- Social Links Section -->
-  <section id="social" class="section">
-    <div class="container">
-      <h2>Social Links</h2>
-      <p>Connect with me on these platforms:</p>
-      <ul class="social-links">
-        <li><a href="https://github.com/IskDevs" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
-        <li><a href="#" onclick="return false;"><i class="fab fa-discord"></i> Discord: isk_gmz</a></li>
-      </ul>
-    </div>
-  </section>
+  <script>
+    const $ = (s, r=document) => r.querySelector(s);
+    const pick = (a)=>a[Math.floor(Math.random()*a.length)];
 
-  <!-- Include GSAP library and custom script at the end of body for performance -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
-  <script src="script.js"></script>
-    <script>
-        // Theme Toggle (Dark Mode <-> Light Mode)
-const themeToggleBtn = document.getElementById('theme-toggle');
-themeToggleBtn.addEventListener('click', () => {
-  document.body.classList.toggle('light-mode');
-  // Update the toggle button text depending on the mode
-  themeToggleBtn.textContent = document.body.classList.contains('light-mode') ? 'Dark Mode' : 'Light Mode';
-});
+    // toast
+    const toast = $('#toast');
+    let toastT;
+    function showToast(msg){
+      toast.textContent = msg;
+      toast.style.display = 'block';
+      clearTimeout(toastT);
+      toastT = setTimeout(()=>toast.style.display='none', 2200);
+    }
 
-// GSAP Animations for section entrances
-gsap.from('.section', {
-  opacity: 0,
-  y: 50,
-  duration: 0.8,
-  stagger: 0.3,
-  ease: 'power2.out'
-});
+    // bait lines
+    const bait = [
+      '"jg diff" (self report)',
+      '"unlucky" (pattern detected)',
+      '"trust" (do not trust)',
+      '"we scale" (we do not)',
+      '"it’s winnable" (it is not)',
+      '"my team is trolling" (it’s you)',
+      '"i win this" (you don’t)'
+    ];
 
-    </script>
+    $('#btnBait').addEventListener('click', ()=>{
+      showToast(pick(bait));
+      document.body.classList.add('shake');
+      setTimeout(()=>document.body.classList.remove('shake'), 350);
+    });
+
+    window.addEventListener('keydown', (e)=>{
+      if(e.key.toLowerCase()==='r') showToast(pick(bait));
+      if(e.key==='Escape') closeContract();
+    });
+
+    // contract popup (reliable)
+    const backdrop = $('#backdrop');
+    const modal = $('#modal');
+    let contractShown = false;
+
+    function openContract(){ backdrop.style.display = 'flex'; }
+    function closeContract(){ backdrop.style.display = 'none'; }
+
+    $('#btnOpenContract').addEventListener('click', ()=>{ openContract(); showToast('Contract opened. Cope.'); });
+    $('#btnClose').addEventListener('click', closeContract);
+    backdrop.addEventListener('click', (e)=>{ if(e.target===backdrop) closeContract(); });
+
+    // Trigger: first real scroll
+    window.addEventListener('scroll', ()=>{
+      if(contractShown) return;
+      const y = window.scrollY || document.documentElement.scrollTop;
+      if(y > 10){
+        contractShown = true;
+        openContract();
+        showToast('Sign the contract.');
+      }
+    }, {passive:true});
+
+    // Also trigger when slide 1 is visible
+    const slide1 = $('#slide-1');
+    if('IntersectionObserver' in window && slide1){
+      const io = new IntersectionObserver((entries)=>{
+        for(const ent of entries){
+          if(ent.isIntersecting && !contractShown){
+            contractShown = true;
+            openContract();
+            showToast('Mandatory contract jumpscare.');
+            io.disconnect();
+          }
+        }
+      }, {threshold: 0.35});
+      io.observe(slide1);
+    }
+
+    $('#btnAuto').addEventListener('click', ()=>{
+      ['c1','c2','c3','c4'].forEach(id=>$('#'+id).checked = true);
+      showToast('Auto-checked. Accountability avoided.');
+    });
+
+    $('#btnSign').addEventListener('click', ()=>{
+      const all = ['c1','c2','c3','c4'].every(id=>$('#'+id).checked);
+      const out = $('#signOut');
+      if(!all){
+        out.textContent = 'Status: REJECTED ❌\\nReason: you refused civilization.\\nFix: check the boxes.';
+        modal.classList.add('shake');
+        setTimeout(()=>modal.classList.remove('shake'), 450);
+        showToast('Rejected.');
+        return;
+      }
+      out.textContent = 'Status: SIGNED ✅\\nResult: +1 aura (imaginary) +3 mental (placebo).';
+      showToast('Signed. Proceed to int anyway.');
+      setTimeout(closeContract, 700);
+    });
+
+    showToast('Scroll. The contract is mandatory.');
+  </script>
 </body>
 </html>
