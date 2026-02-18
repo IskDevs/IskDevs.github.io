@@ -1,0 +1,373 @@
+/* TrollQuest-ish vibe: loud, chunky outlines, comic panels, halftone, stickers */
+
+:root{
+  --ink:#0b0b0f;
+  --paper:#fff7e2;
+  --paper2:#f3ffe9;
+  --acid:#27ff7a;
+  --rage:#ff2d55;
+  --zap:#ffd400;
+  --sky:#35a7ff;
+  --bruise:#7b5cff;
+
+  --radius:24px;
+  --radius2:18px;
+
+  --shadow: 0 20px 0 rgba(0,0,0,.20), 0 28px 70px rgba(0,0,0,.22);
+  --shadowSoft: 0 14px 30px rgba(0,0,0,.22);
+
+  /* No Google Fonts: go for loud system stacks */
+  --title: Impact, Haettenschweiler, 'Arial Black', 'Franklin Gothic Heavy', system-ui, sans-serif;
+  --body: 'Trebuchet MS', Verdana, system-ui, -apple-system, Segoe UI, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:var(--body);
+  color:var(--ink);
+  overflow-x:hidden;
+
+  /* Paper + halftone + chaotic splats */
+  background:
+    radial-gradient(1200px 700px at 10% 15%, rgba(255,45,85,.20), transparent 55%),
+    radial-gradient(1000px 650px at 92% 18%, rgba(39,255,122,.18), transparent 58%),
+    radial-gradient(900px 600px at 70% 92%, rgba(53,167,255,.16), transparent 55%),
+    linear-gradient(135deg, var(--paper), var(--paper2));
+}
+
+/* Halftone dots layer */
+body::before{
+  content:"";
+  position:fixed; inset:0;
+  pointer-events:none;
+  opacity:.20;
+  background:
+    radial-gradient(circle, rgba(0,0,0,.30) 1.2px, transparent 1.8px);
+  background-size: 14px 14px;
+  mix-blend-mode:multiply;
+  filter: contrast(115%);
+}
+
+/* subtle noise without images */
+body::after{
+  content:"";
+  position:fixed; inset:-40px;
+  pointer-events:none;
+  opacity:.10;
+  background:
+    repeating-linear-gradient(0deg, rgba(0,0,0,.10) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(0,0,0,.06) 0 1px, transparent 1px 4px);
+  mix-blend-mode:overlay;
+  transform: rotate(-1deg);
+}
+
+.wrap{max-width:980px;margin:0 auto;padding:18px}
+
+/* Sticky top bar like a torn sticker */
+.top{
+  position:sticky; top:0; z-index:10;
+  background: rgba(255,255,255,.82);
+  backdrop-filter: blur(10px);
+  border-bottom:4px solid var(--ink);
+  box-shadow: 0 10px 0 rgba(0,0,0,.12);
+}
+.bar{
+  max-width:980px; margin:0 auto;
+  padding:12px 18px;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+}
+.brand{display:flex; align-items:center; gap:12px}
+.blob{
+  width:44px; height:44px;
+  border-radius:14px;
+  border:4px solid var(--ink);
+  background:
+    conic-gradient(from 120deg, var(--rage), var(--zap), var(--acid), var(--bruise), var(--sky), var(--rage));
+  box-shadow: var(--shadowSoft);
+  transform: rotate(-6deg);
+}
+.brand h1{
+  margin:0;
+  font-family:var(--title);
+  letter-spacing:.5px;
+  font-size:18px;
+  text-transform:uppercase;
+  text-shadow: 2px 2px 0 rgba(0,0,0,.18);
+}
+.brand .sub{
+  margin-top:2px;
+  font-family:var(--mono);
+  font-size:12px;
+  color: rgba(0,0,0,.70);
+}
+
+.row{display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:flex-end}
+
+/* Sticker buttons */
+.btn{
+  font-family:var(--title);
+  text-transform:uppercase;
+  letter-spacing:.8px;
+  font-size:12px;
+  border:4px solid var(--ink);
+  background: #fff;
+  padding:10px 12px;
+  border-radius:999px;
+  cursor:pointer;
+  user-select:none;
+  box-shadow: 0 10px 0 rgba(0,0,0,.16), 0 18px 30px rgba(0,0,0,.18);
+  transform: translateY(0);
+  transition: transform .08s ease, filter .12s ease;
+}
+.btn:hover{transform: translateY(-2px) rotate(-.4deg); filter:saturate(1.15)}
+.btn:active{transform: translateY(1px) scale(.99)}
+.btn.primary{
+  background: linear-gradient(135deg, rgba(255,45,85,.98), rgba(255,212,0,.95));
+}
+
+.deck{padding:18px 0 96px}
+
+/* Comic panel slide */
+.slide{
+  margin: 16px 0;
+  border:5px solid var(--ink);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,255,255,.92));
+  box-shadow: var(--shadow);
+  overflow:hidden;
+  position:relative;
+}
+
+/* top paint stroke */
+.slide::before{
+  content:"";
+  position:absolute; inset:0 0 auto 0;
+  height:12px;
+  background:
+    repeating-linear-gradient(90deg,
+      rgba(255,45,85,1) 0 80px,
+      rgba(255,212,0,1) 80px 160px,
+      rgba(39,255,122,1) 160px 240px,
+      rgba(53,167,255,1) 240px 320px,
+      rgba(123,92,255,1) 320px 400px);
+}
+
+.hd{
+  padding: 18px 14px 10px;
+  border-bottom:3px dashed rgba(0,0,0,.35);
+  display:flex; justify-content:space-between; gap:12px; align-items:flex-start;
+}
+.title{
+  margin:0;
+  font-family:var(--title);
+  font-size:36px;
+  line-height:1.02;
+  letter-spacing: 1px;
+  text-transform:uppercase;
+  transform: skewX(-6deg);
+  text-shadow: 3px 3px 0 rgba(0,0,0,.20);
+}
+.title small{
+  display:block;
+  margin-top:8px;
+  font-family:var(--body);
+  transform: skewX(6deg);
+  text-transform:none;
+  letter-spacing:0;
+  font-size:14px;
+  color: rgba(0,0,0,.75);
+}
+
+/* Rubber stamp tags */
+.stamp{
+  font-family:var(--title);
+  font-size:12px;
+  text-transform:uppercase;
+  padding:8px 12px;
+  border-radius:999px;
+  border:4px solid var(--ink);
+  background: rgba(255,255,255,.92);
+  transform: rotate(10deg);
+  white-space:nowrap;
+  box-shadow: 0 10px 0 rgba(0,0,0,.12);
+}
+.stamp.red{background: rgba(255,45,85,.20)}
+.stamp.y{background: rgba(255,212,0,.28)}
+.stamp.c{background: rgba(39,255,122,.20)}
+.stamp.v{background: rgba(123,92,255,.18)}
+
+.bd{padding:14px}
+
+.two{display:grid; grid-template-columns: 1.05fr .95fr; gap:14px; align-items:stretch;}
+@media (max-width:900px){ .two{grid-template-columns:1fr} }
+
+.bullets{
+  margin:0;
+  padding-left: 18px;
+  font-size: 18px;
+  line-height: 1.45;
+}
+.bullets li{margin: 8px 0}
+.bullets strong{color: var(--rage); text-shadow: 1px 1px 0 rgba(0,0,0,.10)}
+
+.callout{
+  margin-top:12px;
+  border:4px dashed rgba(0,0,0,.40);
+  background: rgba(255,212,0,.22);
+  border-radius: var(--radius2);
+  padding:12px;
+  font-size: 15px;
+}
+
+.imgbox{
+  border-radius: var(--radius2);
+  border:4px solid var(--ink);
+  background: rgba(255,255,255,.95);
+  overflow:hidden;
+  padding: 10px;
+  box-shadow: 0 12px 0 rgba(0,0,0,.14);
+}
+.imgbox img{
+  width:100%;
+  height:auto;
+  max-height: 380px;
+  object-fit: contain;
+  display:block;
+  margin: 0 auto;
+}
+.caption{
+  margin-top:8px;
+  font-family: var(--mono);
+  color: rgba(0,0,0,.70);
+  font-size: 12px;
+}
+
+/* player card */
+.card{
+  border:5px solid var(--ink);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(135deg, rgba(255,45,85,.16), rgba(39,255,122,.14));
+  padding:12px;
+  box-shadow: 0 14px 0 rgba(0,0,0,.12);
+}
+.cardTop{display:flex; gap:12px; align-items:center}
+.pfp{
+  width:76px; height:76px;
+  border-radius:20px;
+  overflow:hidden;
+  border:5px solid var(--ink);
+  box-shadow: 0 14px 0 rgba(0,0,0,.14);
+  background:#fff;
+  flex:0 0 auto;
+  transform: rotate(-2deg);
+}
+.pfp img{width:100%; height:100%; object-fit:cover; display:block}
+.cardName{font-family:var(--title); font-size:22px; margin:0; letter-spacing:1px; text-transform:uppercase}
+.cardType{font-family:var(--mono); font-size:12px; color: rgba(0,0,0,.72)}
+.stats{margin-top:10px; display:grid; grid-template-columns: 1fr 1fr; gap:8px;}
+.stat{
+  border:4px dashed rgba(0,0,0,.40);
+  border-radius:18px;
+  padding:8px 10px;
+  background: rgba(255,255,255,.85);
+  font-family:var(--mono);
+  font-size:12px;
+}
+.stat b{color:var(--rage)}
+
+/* modal */
+.backdrop{
+  position:fixed; inset:0;
+  background: rgba(0,0,0,.65);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:50;
+}
+.modal{
+  width:min(620px, 100%);
+  border-radius: var(--radius);
+  border:5px solid var(--ink);
+  background: rgba(255,255,255,.98);
+  box-shadow: 0 30px 90px rgba(0,0,0,.45);
+  overflow:hidden;
+}
+.modal .top{
+  padding:14px 14px 0;
+  display:flex; justify-content:space-between; gap:10px; align-items:flex-start;
+}
+.modal h2{
+  margin:0;
+  font-family:var(--title);
+  font-size:22px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+.modal .sub{
+  margin:4px 0 0;
+  font-family:var(--mono);
+  font-size:12px;
+  color: rgba(0,0,0,.70);
+}
+.modal .body{padding:12px 14px 14px}
+
+.check{
+  display:flex; gap:10px; align-items:flex-start;
+  border:4px solid var(--ink);
+  background: rgba(255,45,85,.14);
+  border-radius: var(--radius2);
+  padding:10px 12px;
+  margin:10px 0;
+  font-size:15px;
+}
+.check span{display:block; color: rgba(0,0,0,.70); font-family:var(--mono); font-size:12px; margin-top:4px;}
+
+.out{
+  margin-top:10px;
+  border:4px dashed rgba(0,0,0,.40);
+  background: rgba(255,255,255,.86);
+  border-radius: var(--radius2);
+  padding:12px;
+  font-family: var(--mono);
+  font-size:12.5px;
+  white-space:pre-wrap;
+}
+
+.toast{
+  position:fixed;
+  left:50%; bottom:18px;
+  transform: translateX(-50%);
+  border-radius:999px;
+  border:4px solid var(--ink);
+  background: rgba(255,255,255,.94);
+  padding:10px 12px;
+  font-family:var(--mono);
+  font-size:12px;
+  display:none;
+  box-shadow: 0 14px 0 rgba(0,0,0,.12), 0 20px 40px rgba(0,0,0,.18);
+  z-index:60;
+}
+
+/* lil wobble on emphasis */
+.shake{animation: shake .25s ease-in-out 2}
+@keyframes shake{0%{transform:translateX(0)}25%{transform:translateX(-5px)}50%{transform:translateX(6px)}75%{transform:translateX(-4px)}100%{transform:translateX(0)}}
+
+kbd{font-family:var(--mono);font-size:11px;padding:2px 6px;border-radius:10px;border:2px solid rgba(0,0,0,.35);background:rgba(255,255,255,.88)}
+
+.footerDisclaimer{
+  margin-top:16px;
+  font-family:var(--mono);
+  font-size:11px;
+  color: rgba(0,0,0,.68);
+  text-align:center;
+}
+
+/* make links look like doodles */
+a{color: var(--ink); text-decoration: none; border-bottom: 3px dotted rgba(0,0,0,.45)}
+a:hover{background: rgba(255,212,0,.22)}
