@@ -1,0 +1,12 @@
+Devil's Coinflip REBUILD V18
+
+This build bundles refreshed sprite assets inside /assets for the playable package.
+For future swaps / expansion, recommended free asset sources:
+- Kenney free assets: https://kenney.nl/assets
+- OpenGameArt free packs: https://opengameart.org/
+
+The code remains browser-playable from index.html.
+
+V19:
+- Added bespoke sprite assets for Devil, claw, beggar, and gremlin.
+- Focused on art-only polish, plus dev test trigger for the loss cinematic.
