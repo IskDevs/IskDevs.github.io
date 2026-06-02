@@ -57,3 +57,10 @@ V24 fixes:
 - Added reliable 32px cursor sprites and explicit canvas cursor switching.
 - Prevented dealer/host/homeless mumbles from overlapping.
 - Added interaction input locks to stop stacked door/dialog interactions.
+
+CUSTOM MENU PATCH
+-----------------
+- Main menu now uses assets/menu_title_bg.png from the provided title-screen image.
+- Menu is still fully functional on the canvas: START GAME, OPTIONS, QUIT.
+- Hovering a menu option shows a small pixel skull marker beside it.
+- Added subtle animated heat-ripple/scan shimmer over the menu background.
